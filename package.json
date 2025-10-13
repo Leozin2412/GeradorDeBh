@@ -1,0 +1,26 @@
+{
+  "name": "geradordebhformatado",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon --env-file .env ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leozin2412/GeradorDeBHFormatado.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Leozin2412/GeradorDeBHFormatado/issues"
+  },
+  "homepage": "https://github.com/Leozin2412/GeradorDeBHFormatado#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
