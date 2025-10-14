@@ -33,6 +33,9 @@ const TSrepo={
                 Descricao:true,
                 TpIncidencia:true,
                 Executante:true
+            },
+            orderBy:{
+                    DtInicial:'desc'
             }
 
             }
