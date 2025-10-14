@@ -10,6 +10,8 @@ datasource db {
 
 model timesheet {
   id           Int      @id @default(autoincrement())
+  Segurado      String  @db.VarChar(150)
+Sinistro       String   @db.VarChar(100)
   NTradsul     String   @db.VarChar(50)
   DtInicial    DateTime @db.DateTime(0)
   DtFinal      DateTime @db.DateTime(0)
