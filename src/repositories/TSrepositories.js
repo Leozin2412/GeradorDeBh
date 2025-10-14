@@ -14,13 +14,13 @@ const TSrepo={
                     return  importTS;
     },
 
-    async selectTS(processo,DtInicial,DtFinal){
+    async selectTS(processo,DtInicialL,DtFinalL){
 
         const selectTS= prisma.timesheet.findMany(
            { where:{
                 NTradsul:processo,
-                DtInicial:{gte:DtInicial},
-                DtFinal:{lte:DtFinal}
+                DtInicial:{gte:DtInicialL},
+                DtFinal:{lte:DtFinalL}
             },
             select:{
                 NTradsul:true,
@@ -35,6 +35,7 @@ const TSrepo={
         )
 
         return selectTS
+    
     }
     
 }
