@@ -4,7 +4,7 @@ import TSrepo from "../repositories/TSrepositories.js";
  const TScontroller={
      importTS:async (req,res)=>{
         try{
-            const{processo,DTinicial,DTfinal,desc,incidencia,executante}=req.body;
+            const{processo,DtInicial,DtFinal,desc,incidencia,executante}=req.body;
             const msgErrors=[];
 
             if(!processo) msgErrors.push("Processo não informado")
@@ -18,7 +18,7 @@ import TSrepo from "../repositories/TSrepositories.js";
             return res.status(400).json({ ok: false, message: msgErrors.join(', ') });
             }
 
-            await TSrepo.importTS(processo,DTinicial,DTfinal,desc,incidencia,executante)
+            await TSrepo.importTS(processo,DtInicial,DtFinal,desc,incidencia,executante)
             return res.status(200).json({ok:true, message:"Timesheets importados com sucesso"})
 
         }catch(error){
