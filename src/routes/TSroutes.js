@@ -1,9 +1,9 @@
 import {Router} from 'express'
-//importar controllers
+import TScontroller from '../controller/TScontroller.js'
 
 const routes=Router()
 
-
+routes.post("/ts/import",TScontroller.importTS)
 
 
 

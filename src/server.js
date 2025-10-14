@@ -1,6 +1,6 @@
 import express from 'express'
-import routes from './routes/TSroutes'
-import config from './config'
+import routes from './routes/TSroutes.js'
+import config from './config.js'
 import cors from 'cors'
 
 

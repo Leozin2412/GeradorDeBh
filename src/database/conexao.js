@@ -1,4 +1,4 @@
-
+/*
 import { createPool } from 'mysql2/promise';
 
 const conexao = createPool({
@@ -14,3 +14,7 @@ const conexao = createPool({
 
 // Exportamos a constante 'conexao'
 export default conexao;
+ 
+INATIVO DEVIDO O USO DO PRISMA ORM QUE SE CONECTA AO DATABASE EM: ./prisma/schema.prisma
+
+*/
