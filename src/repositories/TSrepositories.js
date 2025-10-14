@@ -16,11 +16,27 @@ const TSrepo={
 
     async selectTS(processo,DtInicial,DtFinal){
 
-        
+        const selectTS= prisma.timesheet.findMany(
+           { where:{
+                NTradsul:processo,
+                DtInicial:{gte:DtInicial},
+                DtFinal:{lte:DtFinal}
+            },
+            select:{
+                NTradsul:true,
+                DtInicial:true,
+                DtFinal:true,
+                Descricao:true,
+                TpIncidencia:true,
+                Executante:true
+            }
 
+            }
+        )
 
+        return selectTS
     }
-
+    
 }
 
 

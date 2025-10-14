@@ -8,8 +8,8 @@ import TSrepo from "../repositories/TSrepositories.js";
             const msgErrors=[];
 
             if(!processo) msgErrors.push("Processo não informado")
-            if(!DTinicial) msgErrors.push("Data Inicial não informada")
-            if(!DTfinal)msgErrors.push("Data Final não informada")
+            if(!DtInicial) msgErrors.push("Data Inicial não informada")
+            if(!DtFinal)msgErrors.push("Data Final não informada")
             if(!desc)msgErrors.push("Descrição não informada")
             if(!incidencia)msgErrors.push("Tipo de Incidência não informado")
             if(!executante)msgErrors.push("Perito não informado")
