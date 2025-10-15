@@ -53,6 +53,7 @@ async function main() {
   // 1. Sinistro de Incêndio (Atividade Inicial)
   const atividade1_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Indústrias Químicas BR',
       Sinistro: 'SEG-2024-001',
       NTradsul: nTradsul1,
@@ -67,6 +68,7 @@ async function main() {
   // 2. Atividade de Acompanhamento para o mesmo Incêndio
   const atividade1_2 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Indústrias Químicas BR',
       Sinistro: 'SEG-2024-001',
       NTradsul: nTradsul1, // MESMO NTradsul
@@ -81,6 +83,7 @@ async function main() {
   // 3. Sinistro de Transporte
   const atividade2_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Logística Rápida Ltda.',
       Sinistro: 'SEG-2024-002',
       NTradsul: nTradsul2,
@@ -95,6 +98,7 @@ async function main() {
   // 4. Sinistro de Engenharia Civil
   const atividade3_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Shopping Center Urbano',
       Sinistro: 'SEG-2024-003',
       NTradsul: nTradsul3,
@@ -109,6 +113,7 @@ async function main() {
   // 5. Atividade de Acompanhamento para o Sinistro Civil
     const atividade3_2 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Shopping Center Urbano',
       Sinistro: 'SEG-2024-003',
       NTradsul: nTradsul3, // MESMO NTradsul
@@ -123,6 +128,7 @@ async function main() {
   // 6. Sinistro de Falha em Equipamento Mecânico
   const atividade4_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Siderúrgica Aço Forte',
       Sinistro: 'SEG-2024-004',
       NTradsul: nTradsul4,
@@ -137,6 +143,7 @@ async function main() {
   // 7. Sinistro de Dano Elétrico
   const atividade5_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Hospital Vida Plena',
       Sinistro: 'SEG-2024-005',
       NTradsul: nTradsul5,
@@ -151,6 +158,7 @@ async function main() {
   // 8. Sinistro de Roubo de Carga
   const atividade6_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Transportadora Carga Segura',
       Sinistro: 'SEG-2024-006',
       NTradsul: nTradsul6,
@@ -165,6 +173,8 @@ async function main() {
   // 9. Atividade de Consultoria em Prevenção de Perdas
   const atividade7_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Fábrica de Alimentos NutriBem',
       Sinistro: 'CONSULT-2024-001',
       NTradsul: nTradsul7,
@@ -179,6 +189,7 @@ async function main() {
   // 10. Sinistro Massificado - Dano Elétrico Residencial
    const atividade8_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Cliente Residencial XYZ',
       Sinistro: 'MASS-2024-10521',
       NTradsul: `TOK${currentYear}${generateRandomNumber()}`,
@@ -193,6 +204,7 @@ async function main() {
   // 11. Sinistro de Prejuízo Mecânico em Máquina Agrícola
   const atividade9_1 = await prisma.timesheet.create({
     data: {
+      Seguradora:"TOKIO MARINE",
       Segurado: 'Fazenda Terra Fértil',
       Sinistro: 'AGRO-2024-078',
       NTradsul: `TOK${currentYear}${generateRandomNumber()}`,

@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE `timesheet` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `Seguradora` VARCHAR(150) NOT NULL,
     `Segurado` VARCHAR(150) NOT NULL,
     `Sinistro` VARCHAR(100) NOT NULL,
     `NTradsul` VARCHAR(50) NOT NULL,

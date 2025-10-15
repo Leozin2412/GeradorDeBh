@@ -25,6 +25,7 @@ const TSrepo={
                 DtFinal:{lte:DtFinalL}
             },
             select:{
+                Seguradora:true,
                 Segurado:true,
                 Sinistro:true,
                 NTradsul:true,

@@ -146,7 +146,7 @@ const __dirname = path.dirname(__filename);
                         headerCell.value = {
                             richText: [
                                 { font: { bold: true, size: 12, name: 'Arial' }, text: 'Boletim de Horas Trabalhadas\n' },
-                                { font: { bold: true, size: 11, name: 'Arial' }, text: `SEGURADORA: ${'TOKIO MARINE'}\n` }, // Substitua pela variável correta
+                                { font: { bold: true, size: 11, name: 'Arial' }, text: `SEGURADORA: ${firstItem.Seguradora}\n` }, // Substitua pela variável correta
                                 { font: { size: 11, name: 'Arial' }, text: `Sinistro: ${firstItem.Sinistro}\n` },
                                 { font: { size: 11, name: 'Arial' }, text: `Segurado: ${firstItem.Segurado}\n` },
                                 { font: { size: 11, name: 'Arial' }, text: `Nº Tradsul: ${firstItem.NTradsul}` },
@@ -161,7 +161,7 @@ const __dirname = path.dirname(__filename);
 
                         worksheet.addImage(logoImage, {
                             tl: { col: 0.1, row: 0.1 }, // Posição (coluna A, linha 1 com pequena margem)
-                            ext: { width: 150, height: 40 } // Tamanho da imagem
+                            ext: { width: 157, height: 120 } // Tamanho da imagem
                         });
 
                         // --- CABEÇALHO DA TABELA (LINHA 2) ---
@@ -215,7 +215,7 @@ const __dirname = path.dirname(__filename);
                         const totalFinalRow = worksheet.addRow([]);
                         totalFinalRow.getCell('B').value = "Total Cálculo Final";
                         totalFinalRow.getCell('B').font = { bold: true };
-                        
+                            
                         // --- BORDAS DA TABELA E TOTAIS ---
                         const tableEndRow = totalFinalRow.number;
                         for (let i = 2; i <= tableEndRow; i++) {
@@ -236,7 +236,10 @@ const __dirname = path.dirname(__filename);
                         }
 
                         // --- RODAPÉ FINAL ---
-                        const finalFooterRowNumber = tableEndRow + 2;
+                        const finalFooterRowNumber = tableEndRow + 1;
+                        
+                        worksheet.getRow(finalFooterRowNumber).height = 45; // Defina a altura desejada. O valor é em pontos.
+
                         worksheet.mergeCells(`A${finalFooterRowNumber}:F${finalFooterRowNumber}`);
                         const footerCell = worksheet.getCell(`A${finalFooterRowNumber}`);
                         footerCell.value = 'Tradsul Consultoria e Pericias Técnicas\nCREA-RJ   184154-D';
@@ -245,6 +248,7 @@ const __dirname = path.dirname(__filename);
                             top: { style: 'thick' }, left: { style: 'thick' },
                             bottom: { style: 'thick' }, right: { style: 'thick' }
                         };
+                
                     }
                 }
 
@@ -256,15 +260,15 @@ const __dirname = path.dirname(__filename);
                 });
 
 
-    /*
-                const filename = `Boletim_Horas_${firstItem.NTradsul}.xlsx`;
+   
+                const filename = `${firstItem.Sinistro || 'geral'}-${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
                 res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
                 
                 await workbook.xlsx.write(res);
                 res.end();
-                */
-                const filename = `Boletim_Horas_${firstItem.NTradsul || 'geral'}.xlsx`;
+               /*
+                const filename = `${firstItem.Sinistro || 'geral'}-${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
                 const savePath = path.join(__dirname, '..', '..', 'public', filename);
 
                     // Salva o arquivo no caminho especificado
@@ -275,7 +279,7 @@ const __dirname = path.dirname(__filename);
                         message: 'Arquivo Excel gerado e salvo com sucesso no servidor.',
                         path: savePath 
                 });
-                
+                */
             }catch(error){
                 console.error("Erro ao gerar o arquivo Excel:", error);
                 res.status(500).json({ error: "Ocorreu um erro interno ao gerar o boletim." });
