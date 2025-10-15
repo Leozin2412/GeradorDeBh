@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
  const TScontroller={
      importTS:async (req,res)=>{
         try{
-            const{segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante}=req.body;
+            const{seguradora,segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante}=req.body;
             const msgErrors=[];
 
             if(!processo) msgErrors.push("Processo não informado")
@@ -28,7 +28,7 @@ const __dirname = path.dirname(__filename);
             return res.status(400).json({ ok: false, message: msgErrors.join(', ') });
             }
            
-          const TSimportado=  await TSrepo.importTS(segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante)
+          const TSimportado=  await TSrepo.importTS(seguradora,segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante)
             return res.status(200).json({ok:true, message:"Timesheets importados com sucesso",data:TSimportado})
 
         }catch(error){
@@ -62,6 +62,7 @@ const __dirname = path.dirname(__filename);
             return res.status(500).json({ok:false, message:"Erro ao importa TimeSheets"}) 
         }  
     },
+    
         exportTS:async(req,res)=>{
             try{
                 const{processo,DtInicial,DtFinal}=req.body;

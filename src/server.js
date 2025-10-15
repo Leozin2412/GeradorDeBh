@@ -7,7 +7,8 @@ import cors from 'cors'
 const app = express()
 
 app.use(cors({
-    origin:"*"
+    origin:"*",
+    exposedHeaders: ['Content-Disposition']
 }))
 
 app.use(express.json());//Ativa body pars

@@ -1,8 +1,9 @@
 import prisma from "../util/prismaclient.js";
 const TSrepo={
-    async importTS(segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante){
+    async importTS(seguradora,segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante){
                 const importTS=await prisma.timesheet.create({
                     data:{
+                        Seguradora:seguradora,
                         Segurado:segurado,
                         Sinistro:sinistro,
                         NTradsul:processo,
