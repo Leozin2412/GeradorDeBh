@@ -3,15 +3,15 @@ const TSrepo={
     async importTS(seguradora,segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante){
                 const importTS=await prisma.timesheet.create({
                     data:{
-                        Seguradora:seguradora,
-                        Segurado:segurado,
-                        Sinistro:sinistro,
-                        NTradsul:processo,
-                        DtInicial:DtInicial,
-                        DtFinal:DtFinal,
-                        Descricao:desc,
-                        TpIncidencia:incidencia,
-                        Executante:executante
+                    Seguradora: seguradora,
+                    Segurado: segurado,
+                    Sinistro: sinistro,
+                    NTradsul: processo,
+                    DtInicial: DtInicial,
+                    DtFinal: DtFinal,
+                    Descricao: desc,
+                    TpIncidencia: incidencia,
+                    Executante: executante,
                     }
                 })
                     return  importTS;

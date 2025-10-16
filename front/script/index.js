@@ -133,8 +133,7 @@ fileInput.addEventListener('change', async (event) => {
         const response = await fetch('http://localhost:3000/ts/import', {
             method: 'POST',
             body: formData,
-            // IMPORTANTE: NÃO defina o header 'Content-Type' ao enviar FormData.
-            // O navegador faz isso automaticamente com o 'boundary' correto.
+        
         });
 
         const result = await response.json();

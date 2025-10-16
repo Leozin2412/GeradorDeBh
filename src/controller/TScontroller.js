@@ -93,22 +93,22 @@ const __dirname = path.dirname(__filename);
                  * 3D,Prejuízo Transporte,Assistência Técnica Incêndio, Assistência Técnica Cívil, Assistência Técnica 
                  * Elétrica/Eletrônica, Assistência Técnica Mecânica, Assistência Técnica Química, 
                  * Assistência Técnica Metalurgia  ] */
-                        const worksheetMap = {
-                    'Causa': workbook.addWorksheet('Causa'),
-                    'Civil': workbook.addWorksheet('Prejuizo Civil'),
-                    'Mecanica': workbook.addWorksheet('Prejuizo Mecanica'),
-                    'Quimica': workbook.addWorksheet('Prejuizo Quimica'),
-                    'Metalurgia': workbook.addWorksheet('Prejuizo Metalurgia'),
-                    'Eletrica': workbook.addWorksheet('Prejuizo Eletrica Eletronica'),
-                    'Transporte': workbook.addWorksheet('Prejuizo Transporte'),
-                    'ATincendio': workbook.addWorksheet('Assistencia Tecnica Incendio'),
-                    'ATcivil': workbook.addWorksheet('Assitencia Tecnica Civil'),
-                    'ATeletrica': workbook.addWorksheet('Assistencia Tecnica Eletrica'),
-                    'ATmecanica': workbook.addWorksheet('Assistencia Tecnica Mecanica'),
-                    'ATquimica': workbook.addWorksheet('Assistencia Quimica'),
-                    'ATmetalurgia': workbook.addWorksheet('Assistencia Tecnica Metalurgia'),
-                    '3D': workbook.addWorksheet('3D'),
-                };
+                const worksheetMap = {
+                'Causa': workbook.addWorksheet('Causa'),
+                'Civil': workbook.addWorksheet('Prejuízo Cívil'),
+                'Mecânica': workbook.addWorksheet('Prejuízo Mecânica'), // Corrigido para 'Mecânica'
+                'Química': workbook.addWorksheet('Prejuízo Química'),   // Corrigido para 'Química'
+                'Metalurgia': workbook.addWorksheet('Prejuízo Metalurgia'),
+                'Elétrica': workbook.addWorksheet('Prejuízo Elétrica Eletrônica'), // Corrigido para 'Elétrica'
+                'Transporte': workbook.addWorksheet('Prejuízo Transporte'),
+                'ATIncêndio': workbook.addWorksheet('Assistência Técnica Incêndio'), // Corrigido para 'ATIncêndio'
+                'ATCivil': workbook.addWorksheet('Assistência Técnica Civil'), // Corrigido para 'ATCivil'
+                'ATElétrica': workbook.addWorksheet('Assistência Técnica Elétrica'), // Corrigido para 'ATElétrica'
+                'ATMecânica': workbook.addWorksheet('Assistência Técnica Mecânica'), // Corrigido para 'ATMecânica'
+                'ATQuímica': workbook.addWorksheet('Assistência Técnica Química'), // Corrigido para 'ATQuímica'
+                'ATMetalurgia': workbook.addWorksheet('Assistência Técnica Metalurgia'), // Corrigido para 'ATMetalurgia'
+                '3D': workbook.addWorksheet('3D'),
+            };
 
                     
                     const groupedData = TSfiltrado.reduce((acc, item) => {
@@ -289,6 +289,7 @@ const __dirname = path.dirname(__filename);
 
     // Dentro do objeto TScontroller = { ... }
 
+
 importActivities: async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: 'Nenhum arquivo enviado.' });
@@ -303,24 +304,26 @@ importActivities: async (req, res) => {
             return res.status(400).json({ message: 'A planilha está vazia ou corrompida.' });
         }
 
-      
+        // --- INÍCIO DA LÓGICA INTELIGENTE ---
+
+        // 1. Mapear os cabeçalhos para seus números de coluna
         const headerRow = worksheet.getRow(1);
-        if (!headerRow.values || headerRow.values.length === 1) { 
+        if (!headerRow.values || headerRow.values.length === 1) { // .values[0] é sempre nulo
             return res.status(400).json({ message: 'A planilha não contém um cabeçalho válido.' });
         }
 
         const headerMap = {};
         headerRow.eachCell((cell, colNumber) => {
             if (cell.value) {
-                
+                // Mapeia o nome do header (ex: "NTradsul") para o número da coluna (ex: 4)
                 headerMap[cell.value.toString().trim()] = colNumber;
             }
         });
 
-        
+        // 2. Validar se todos os cabeçalhos necessários existem
         const requiredHeaders = [
-            'Seguradora', 'Segurado', 'Nro. Seguradora', 'Codigo do Sinistro', 
-            'Dt. inicial', 'Dt. final', 'Descrição', 'Tp. Incidência', 'Regulador'
+            'Seguradora', 'Segurado', 'Sinistro', 'NTradsul', 
+            'DtInicial', 'DtFinal', 'Descricao', 'TpIncidencia', 'Executante'
         ];
         
         const missingHeaders = requiredHeaders.filter(h => !headerMap[h]);
@@ -343,13 +346,13 @@ importActivities: async (req, res) => {
             // Agora pegamos os valores pelo nome da coluna, não pela posição!
             const seguradora = row.getCell(headerMap['Seguradora']).value;
             const segurado = row.getCell(headerMap['Segurado']).value;
-            const sinistro = row.getCell(headerMap['Nro. Seguradora']).value;
-            const processo = row.getCell(headerMap['Codigo do Sinistro']).value;
-            const DtInicial = row.getCell(headerMap['Dt. inicial']).value;
-            const DtFinal = row.getCell(headerMap['Dt. final']).value;
-            const desc = row.getCell(headerMap['Descrição']).value;
-            const incidencia = row.getCell(headerMap['Tp. Incidência']).value;
-            const executante = row.getCell(headerMap['Regulador']).value;
+            const sinistro = row.getCell(headerMap['Sinistro']).value;
+            const processo = row.getCell(headerMap['NTradsul']).value;
+            const DtInicial = row.getCell(headerMap['DtInicial']).value;
+            const DtFinal = row.getCell(headerMap['DtFinal']).value;
+            const desc = row.getCell(headerMap['Descricao']).value;
+            const incidencia = row.getCell(headerMap['TpIncidencia']).value;
+            const executante = row.getCell(headerMap['Executante']).value;
             
             try {
                 if (!processo || !DtInicial || !DtFinal || !desc || !incidencia || !executante) {
@@ -357,7 +360,7 @@ importActivities: async (req, res) => {
                 }
                 
                 // Chamada para o repositório com os dados extraídos
-                await TSrepo.importTS(seguradora, segurado,sinistro, processo, DtInicial, DtFinal, desc, incidencia, executante);
+                await TSrepo.importTS(seguradora, segurado, sinistro, processo, DtInicial, DtFinal, desc, incidencia, executante);
                 successfulImports++;
             } catch (error) {
                 failedImports++;
