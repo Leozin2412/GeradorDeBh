@@ -98,3 +98,62 @@ document.getElementById('timesheetForm').addEventListener('submit', async functi
         submitButton.textContent = 'Gerar Boletim';
     }
 });
+
+// --- LÓGICA PARA IMPORTAÇÃO DE ARQUIVO ---
+
+const importarBtn = document.getElementById('importarBtn');
+const fileInput = document.getElementById('fileInput');
+
+// Quando o usuário clicar no nosso botão estilizado, acionamos o clique no input de arquivo escondido.
+importarBtn.addEventListener('click', () => {
+    fileInput.click();
+});
+
+// Quando um arquivo for selecionado no input...
+fileInput.addEventListener('change', async (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+        return; // Nenhum arquivo selecionado
+    }
+
+    const messageDiv = document.getElementById('message');
+    
+    // Prepara o botão e a mensagem para o estado de "carregando"
+    importarBtn.disabled = true;
+    importarBtn.textContent = 'Importando...';
+    messageDiv.style.display = 'none';
+    messageDiv.textContent = '';
+
+    // FormData é o formato correto para enviar arquivos via fetch
+    const formData = new FormData();
+    formData.append('arquivoExcel', file); // 'arquivoExcel' é a chave que o backend vai procurar
+
+    try {
+        // >>> ATENÇÃO: Verifique se esta é a URL correta da nova rota no backend <<<
+        const response = await fetch('http://localhost:3000/ts/import', {
+            method: 'POST',
+            body: formData,
+            // IMPORTANTE: NÃO defina o header 'Content-Type' ao enviar FormData.
+            // O navegador faz isso automaticamente com o 'boundary' correto.
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Erro no servidor durante a importação.');
+        }
+
+        messageDiv.className = 'success';
+        messageDiv.textContent = result.message; // Exibe a mensagem de sucesso do backend
+
+    } catch (error) {
+        console.error('Erro ao importar arquivo:', error);
+        messageDiv.className = 'error';
+        messageDiv.textContent = error.message;
+    } finally {
+        messageDiv.style.display = 'block';
+        importarBtn.disabled = false;
+        importarBtn.textContent = 'Importar Planilha';
+        fileInput.value = ''; // Limpa o input de arquivo para permitir a seleção do mesmo arquivo novamente
+    }
+});

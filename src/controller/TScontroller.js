@@ -285,7 +285,103 @@ const __dirname = path.dirname(__filename);
                 console.error("Erro ao gerar o arquivo Excel:", error);
                 res.status(500).json({ error: "Ocorreu um erro interno ao gerar o boletim." });
             } 
+        },
+
+    // Dentro do objeto TScontroller = { ... }
+
+importActivities: async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: 'Nenhum arquivo enviado.' });
+    }
+
+    try {
+        const workbook = new excel.Workbook();
+        await workbook.xlsx.load(req.file.buffer);
+        
+        const worksheet = workbook.worksheets[0];
+        if (!worksheet) {
+            return res.status(400).json({ message: 'A planilha está vazia ou corrompida.' });
         }
+
+      
+        const headerRow = worksheet.getRow(1);
+        if (!headerRow.values || headerRow.values.length === 1) { 
+            return res.status(400).json({ message: 'A planilha não contém um cabeçalho válido.' });
+        }
+
+        const headerMap = {};
+        headerRow.eachCell((cell, colNumber) => {
+            if (cell.value) {
+                
+                headerMap[cell.value.toString().trim()] = colNumber;
+            }
+        });
+
+        
+        const requiredHeaders = [
+            'Seguradora', 'Segurado', 'Nro. Seguradora', 'Codigo do Sinistro', 
+            'Dt. inicial', 'Dt. final', 'Descrição', 'Tp. Incidência', 'Regulador'
+        ];
+        
+        const missingHeaders = requiredHeaders.filter(h => !headerMap[h]);
+        if (missingHeaders.length > 0) {
+            return res.status(400).json({ 
+                message: `Os seguintes cabeçalhos obrigatórios não foram encontrados na planilha: ${missingHeaders.join(', ')}` 
+            });
+        }
+
+        // --- FIM DA LÓGICA INTELIGENTE ---
+
+        let successfulImports = 0;
+        let failedImports = 0;
+        const errors = [];
+
+        // 3. Iterar sobre as linhas e usar o mapa de cabeçalhos para pegar os dados
+        for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
+            const row = worksheet.getRow(rowNumber);
+
+            // Agora pegamos os valores pelo nome da coluna, não pela posição!
+            const seguradora = row.getCell(headerMap['Seguradora']).value;
+            const segurado = row.getCell(headerMap['Segurado']).value;
+            const sinistro = row.getCell(headerMap['Nro. Seguradora']).value;
+            const processo = row.getCell(headerMap['Codigo do Sinistro']).value;
+            const DtInicial = row.getCell(headerMap['Dt. inicial']).value;
+            const DtFinal = row.getCell(headerMap['Dt. final']).value;
+            const desc = row.getCell(headerMap['Descrição']).value;
+            const incidencia = row.getCell(headerMap['Tp. Incidência']).value;
+            const executante = row.getCell(headerMap['Regulador']).value;
+            
+            try {
+                if (!processo || !DtInicial || !DtFinal || !desc || !incidencia || !executante) {
+                    throw new Error(`Dados obrigatórios (Processo, Datas, Descrição, Incidência, Executante) estão faltando.`);
+                }
+                
+                // Chamada para o repositório com os dados extraídos
+                await TSrepo.importTS(seguradora, segurado,sinistro, processo, DtInicial, DtFinal, desc, incidencia, executante);
+                successfulImports++;
+            } catch (error) {
+                failedImports++;
+                errors.push(`Linha ${rowNumber}: ${error.message}`);
+            }
+        }
+
+        if (successfulImports === 0 && failedImports > 0) {
+            return res.status(400).json({
+                message: `Falha ao importar todas as ${failedImports} linhas.`,
+                errors: errors
+            });
+        }
+        
+        return res.status(200).json({
+            message: `Importação concluída! ${successfulImports} atividades salvas. ${failedImports} falhas.`,
+            errors: errors
+        });
+
+    } catch (error) {
+        console.error("Erro geral na importação da planilha:", error);
+        return res.status(500).json({ message: error.message || 'Ocorreu um erro inesperado ao processar a planilha.' });
+    }
+}
 
 }
 export default TScontroller
