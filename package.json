@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon --env-file .env ./src/server.js"
+    "dev": "nodemon --env-file .env ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +20,16 @@
   },
   "homepage": "https://github.com/Leozin2412/GeradorDeBHFormatado#readme",
   "dependencies": {
+    "@prisma/client": "^6.17.1",
     "cors": "^2.8.5",
+    "exceljs": "^4.4.0",
     "express": "^5.1.0",
-    "nodemon": "^3.1.10"
+    "fs": "^0.0.1-security",
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.10",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "prisma": "^6.17.1"
   }
 }

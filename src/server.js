@@ -1,19 +1,20 @@
 import express from 'express'
-import routes from './routes/TSroutes'
-import config from './config'
+import routes from './routes/TSroutes.js'
+import config from './config.js'
 import cors from 'cors'
 
 
 const app = express()
 
 app.use(cors({
-    origin:"*"
+    origin:"*",
+    exposedHeaders: ['Content-Disposition']
 }))
 
 app.use(express.json());//Ativa body pars
 app.use(routes)
 
-app.listen(config.port,config.host,()=>{
+app.listen(config.port,()=>{
     console.log(`Servidor rodando em ${config.host}`)
 })
 

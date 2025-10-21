@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model timesheet {
+  id           Int      @id @default(autoincrement())
+  Seguradora    String  @db.VarChar(150)
+  Segurado      String  @db.VarChar(150)
+Sinistro       String   @db.VarChar(100)
+  NTradsul     String   @db.VarChar(50)
+  DtInicial    DateTime @db.DateTime(0)
+  DtFinal      DateTime @db.DateTime(0)
+  Descricao    String?  @db.Text
+  TpIncidencia String   @db.VarChar(50)
+  Executante   String   @db.VarChar(50)
+}

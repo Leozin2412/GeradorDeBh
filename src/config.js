@@ -1,6 +1,6 @@
-const config={
-    host: process.env.HOST || 3000,
-    port: process.env.PORT || 'localhost',
+const config = {
+    host: process.env.HOST || 'localhost', 
+    port: process.env.PORT ? parseInt(process.env.PORT) : 3000, 
 }
 
 export default config
