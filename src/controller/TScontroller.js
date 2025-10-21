@@ -333,8 +333,8 @@ importActivities: async (req, res) => {
 
         // 2. Validar se todos os cabeçalhos necessários existem
         const requiredHeaders = [
-            'Seguradora', 'Segurado', 'Sinistro', 'NTradsul', 
-            'DtInicial', 'DtFinal', 'Descricao', 'TpIncidencia', 'Executante'
+            'Seguradora', 'Segurado', 'Nro. Seguradora', 'Codigo do Sinistro', 
+            'Dt. inicial', 'Dt. final', 'Descrição da tarefa', 'Tp. Incidência', 'Regulador'
         ];
         
         const missingHeaders = requiredHeaders.filter(h => !headerMap[h]);
@@ -357,13 +357,13 @@ importActivities: async (req, res) => {
             // Agora pegamos os valores pelo nome da coluna, não pela posição!
             const seguradora = row.getCell(headerMap['Seguradora']).value;
             const segurado = row.getCell(headerMap['Segurado']).value;
-            const sinistro = row.getCell(headerMap['Sinistro']).value;
-            const processo = row.getCell(headerMap['NTradsul']).value;
-            const DtInicial = row.getCell(headerMap['DtInicial']).value;
-            const DtFinal = row.getCell(headerMap['DtFinal']).value;
-            const desc = row.getCell(headerMap['Descricao']).value;
-            const incidencia = row.getCell(headerMap['TpIncidencia']).value;
-            const executante = row.getCell(headerMap['Executante']).value;
+            const sinistro = row.getCell(headerMap['Nro. Seguradora']).value;
+            const processo = row.getCell(headerMap['Codigo do Sinistro']).value;
+            const DtInicial = row.getCell(headerMap['Dt. inicial']).value;
+            const DtFinal = row.getCell(headerMap['Dt. final']).value;
+            const desc = row.getCell(headerMap['Descrição da tarefa']).value;
+            const incidencia = row.getCell(headerMap['Tp. Incidência']).value;
+            const executante = row.getCell(headerMap['Regulador']).value;
             
             try {
                 if (!processo || !DtInicial || !DtFinal || !desc || !incidencia || !executante) {

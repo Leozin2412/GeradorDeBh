@@ -14,7 +14,7 @@ app.use(cors({
 app.use(express.json());//Ativa body pars
 app.use(routes)
 
-app.listen(config.port,config.host,()=>{
+app.listen(config.port,()=>{
     console.log(`Servidor rodando em ${config.host}`)
 })
 
