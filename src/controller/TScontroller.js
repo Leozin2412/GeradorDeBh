@@ -89,21 +89,17 @@ const __dirname = path.dirname(__filename);
             workbook.creator='Leonardo Monteiro';
             workbook.created=new Date()
             const resumo = workbook.addWorksheet('Resumo');
-            //sempre cirarei todas as sheets mas irão ser alimentadas de acordo com a incidencia por meio de um filter
-            /**[Causa, Prejuízo Cívil, Prejuízo Mecânica, Prejuízo Química, Prejuízo Metalurgia, Prejuízo Elétrica/Eletrônica, 
-             * 3D,Prejuízo Transporte,Assistência Técnica Incêndio, Assistência Técnica Cívil, Assistência Técnica 
-             * Elétrica/Eletrônica, Assistência Técnica Mecânica, Assistência Técnica Química, 
-             * Assistência Técnica Metalurgia  ] */
+            
             const worksheetMap = {
             'Causa': workbook.addWorksheet('Causa'),
             'Prejuízo Cívil': workbook.addWorksheet('Prejuízo Cívil'),
-            'Prejuízo Mecânica': workbook.addWorksheet('Prejuízo Mecânica'), // Corrigido para 'Mecânica'
-            'Prejuízo Química': workbook.addWorksheet('Prejuízo Química'),   // Corrigido para 'Química'
+            'Prejuízo Mecânica': workbook.addWorksheet('Prejuízo Mecânica'), 
+            'Prejuízo Química': workbook.addWorksheet('Prejuízo Química'),   
             'Prejuízo Metalurgia': workbook.addWorksheet('Prejuízo Metalurgia'),
-            'Prejuízo Elétrica Eletrônica': workbook.addWorksheet('Prejuízo Elétrica Eletrônica'), // Corrigido para 'Elétrica'
+            'Prejuízo Elétrica Eletrônica': workbook.addWorksheet('Prejuízo Elétrica Eletrônica'), 
             'Prejuízo Transporte': workbook.addWorksheet('Prejuízo Transporte'),
-            'Assistência Técnica Incêndio': workbook.addWorksheet('Assistência Técnica Incêndio'), // Corrigido para 'ATIncêndio'
-            'Assistência Técnica Civil': workbook.addWorksheet('Assistência Técnica Civil'), // Corrigido para 'ATCivil'
+            'Assistência Técnica Incêndio': workbook.addWorksheet('Assistência Técnica Incêndio'), 
+            'Assistência Técnica Civil': workbook.addWorksheet('Assistência Técnica Civil'), 
             'Assistência Técnica Elétrica': workbook.addWorksheet('Assistência Técnica Elétrica'), // Corrigido para 'ATElétrica'
             'Assistência Técnica Mecânica': workbook.addWorksheet('Assistência Técnica Mecânica'), // Corrigido para 'ATMecânica'
             'Assistência Técnica Química': workbook.addWorksheet('Assistência Técnica Química'), // Corrigido para 'ATQuímica'
@@ -191,7 +187,7 @@ const __dirname = path.dirname(__filename);
                             servico: item.Descricao,
                             hInicio: dtInicial,
                             hTermino: dtFinal,
-                            horas: { formula: `=HORA(D${rowNumber}-C${rowNumber})+(MINUTO(D${rowNumber}-C${rowNumber})/60)` },
+                            horas: { formula: `=(D${rowNumber}-C${rowNumber})*24` },
                             executante: item.Executante
                         });
                         
