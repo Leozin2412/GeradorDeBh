@@ -88,8 +88,12 @@ const __dirname = path.dirname(__filename);
             const workbook=new excel.Workbook();
             workbook.creator='Leonardo Monteiro';
             workbook.created=new Date()
-            const resumo = workbook.addWorksheet('Resumo');
             
+
+                
+            const resumo = workbook.addWorksheet('Resumo'); 
+           
+
             const worksheetMap = {
             'Causa': workbook.addWorksheet('Causa'),
             'Prejuízo Cívil': workbook.addWorksheet('Prejuízo Cívil'),
@@ -250,6 +254,9 @@ const __dirname = path.dirname(__filename);
                 }
             }
 
+        
+
+
                         // --- Início da Solução para Problema 2 ---
             // Remover abas que não foram utilizadas
             const populatedIncidenceKeys = new Set(Object.keys(groupedData));
@@ -267,8 +274,27 @@ const __dirname = path.dirname(__filename);
                 workbook.removeWorksheet(sheetId);
             });
             // --- Fim da Solução para Problema 2 ---
+               
+            //Criação da Aba Resumo
+            resumo.getColumn('D').width=13
+            resumo.getColumn('C').width=15
+            const cellD5 = resumo.getCell('D5');
 
-
+            // Defina as propriedades da célula
+            cellD5.value = 'Homem-Hora';
+            cellD5.fill = {
+                type: 'pattern',        // O tipo de preenchimento é um padrão
+                pattern: 'solid',       // O padrão é sólido (cor única)
+                // **MUDANÇA AQUI:** Usaremos bgColor (background color)
+                bgColor: { argb: 'FFDEDEDE' } // 'FF' para 100% de opacidade + o código da cor
+            };
+            cellD5.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            }
+            
 
             const filename = `${firstItem.Sinistro || 'geral'}-${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
