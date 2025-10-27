@@ -1,7 +1,7 @@
 
 
 import { PrismaClient } from '../../generated/prisma/index.js';
-
+ 
 const prisma = globalThis.prisma || new PrismaClient();
 
 

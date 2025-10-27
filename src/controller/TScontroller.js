@@ -392,7 +392,31 @@ const __dirname = path.dirname(__filename);
                     if (!processo || !DtInicial || !DtFinal || !desc || !incidencia || !executante) {
                         throw new Error(`Dados obrigatórios (Processo, Datas, Descrição, Incidência, Executante) estão faltando.`);
                     }
-                    
+                           const dataToInsert = {
+                        seguradora: seguradora, // Já é null se vazio/opcional
+                        segurado: segurado,
+                        sinistro: sinistro, // Já é null se vazio/opcional
+                        processo: processo,
+                        DtInicial: DtInicial,
+                        DtFinal: DtFinal,
+                        desc: desc, // Já é null se vazio/opcional
+                        incidencia: incidencia,
+                        executante: executante,
+                    };
+
+                                                // No seu repositório ou controller, antes de chamar prisma.timesheet.create()
+                        console.log("Dados a serem inseridos:", dataToInsert); // 'dataToInsert' é o objeto que você passa para o create()
+
+                        // Para verificar o comprimento de cada string individualmente:
+                        console.log("Seguradora length:", dataToInsert.Seguradora ? dataToInsert.Seguradora.length : 'N/A');
+                        console.log("Segurado length:", dataToInsert.Segurado ? dataToInsert.Segurado.length : 'N/A');
+                        console.log("Sinistro length:", dataToInsert.Sinistro ? dataToInsert.Sinistro.length : 'N/A');
+                        console.log("NTradsul length:", dataToInsert.NTradsul ? dataToInsert.NTradsul.length : 'N/A');
+                        console.log("TpIncidencia length:", dataToInsert.TpIncidencia ? dataToInsert.TpIncidencia.length : 'N/A');
+                        console.log("Executante length:", dataToInsert.Executante ? dataToInsert.Executante.length : 'N/A');
+                        console.log("Descricao length:", dataToInsert.Descricao ? dataToInsert.Descricao.length : 'N/A');
+
+
                     // Chamada para o repositório com os dados extraídos
                     await TSrepo.importTS(seguradora, segurado, sinistro, processo, DtInicial, DtFinal, desc, incidencia, executante);
                     successfulImports++;
