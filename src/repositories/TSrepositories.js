@@ -1,20 +1,21 @@
-import { stringify } from "querystring";
-//import prisma from "../util/prismaclient.js";
+
+
+
 import { PrismaClient } from '../../generated/prisma/index.js';
 const prisma=new PrismaClient()
 const TSrepo={
-    async importTS(seguradora,segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante){
+    async importTS(seguradora,segurado,sinistroString,processo,DtInicial,DtFinal,descString,incidencia,executante){
                // const sinistroString=stringify(sinistro)
                
                 const importTS=await prisma.timesheet.create({
                     data:{
                     Seguradora: seguradora,
                     Segurado: segurado,
-                    Sinistro: sinistro,
+                    Sinistro: sinistroString,
                     NTradsul: processo,
                     DtInicial: DtInicial,
                     DtFinal: DtFinal,
-                    Descricao: desc,
+                    Descricao: descString,
                     TpIncidencia: incidencia,
                     Executante: executante,
                     }

@@ -109,6 +109,13 @@ const __dirname = path.dirname(__filename);
             'Assistência Técnica Química': workbook.addWorksheet('Assistência Técnica Química'), // Corrigido para 'ATQuímica'
             'Assistência Técnica Metalurgia': workbook.addWorksheet('Assistência Técnica Metalurgia'), // Corrigido para 'ATMetalurgia'
             '3D': workbook.addWorksheet('3D'),
+            'Massificados': workbook.addWorksheet('Massificados'),
+            'Atividade Interna':workbook.addWorksheet('Atividade Interna'),
+            'Analise de documentos':workbook.addWorksheet('Analise de documentos'),
+            'Reunião':workbook.addWorksheet('Reunião'),
+            'Relatório':workbook.addWorksheet('Relatório'),
+            'Viagem':workbook.addWorksheet('Viagem'),
+            'Vistoria':workbook.addWorksheet('Vistoria')
         };
 
                 
@@ -122,7 +129,7 @@ const __dirname = path.dirname(__filename);
             }, {});
             console.log('CHAVES AGRUPADAS (groupedData):', Object.keys(groupedData));
             //Função para incluir a logo    
-                const logoPath = path.join(__dirname, '..','..', 'front','img','logo.png'); // Ajuste o caminho se necessário
+                const logoPath = path.join(__dirname, '..','..', 'front','img','logo.png'); 
             if (!fs.existsSync(logoPath)) {
                 throw new Error(`Logo não encontrado em: ${logoPath}`);
             }
@@ -357,7 +364,7 @@ const __dirname = path.dirname(__filename);
             // 2. Validar se todos os cabeçalhos necessários existem
             const requiredHeaders = [
                 'Seguradora', 'Segurado', 'Nro. Seguradora', 'Codigo do Sinistro', 
-                'Dt. inicial', 'Dt. final', 'Descrição da tarefa', 'Tp. Incidência', 'Regulador'
+                'Dt. inicial', 'Dt. final', 'Descrição da tarefa', 'Tp. Incidência', 'Regulador/Prestador'
             ];
             
             const missingHeaders = requiredHeaders.filter(h => !headerMap[h]);
@@ -386,13 +393,13 @@ const __dirname = path.dirname(__filename);
                 const DtFinal = row.getCell(headerMap['Dt. final']).value;
                 const desc = row.getCell(headerMap['Descrição da tarefa']).value;
                 const incidencia = row.getCell(headerMap['Tp. Incidência']).value;
-                const executante = row.getCell(headerMap['Regulador']).value;
+                const executante = row.getCell(headerMap['Regulador/Prestador']).value;
                 
                 try {
                     if (!processo || !DtInicial || !DtFinal || !desc || !incidencia || !executante) {
                         throw new Error(`Dados obrigatórios (Processo, Datas, Descrição, Incidência, Executante) estão faltando.`);
                     }
-                           const dataToInsert = {
+                      /*     const dataToInsert = {
                         seguradora: seguradora, // Já é null se vazio/opcional
                         segurado: segurado,
                         sinistro: sinistro, // Já é null se vazio/opcional
@@ -402,12 +409,12 @@ const __dirname = path.dirname(__filename);
                         desc: desc, // Já é null se vazio/opcional
                         incidencia: incidencia,
                         executante: executante,
-                    };
+                    };*/
 
                                                 // No seu repositório ou controller, antes de chamar prisma.timesheet.create()
-                        console.log("Dados a serem inseridos:", dataToInsert); // 'dataToInsert' é o objeto que você passa para o create()
+                       // console.log("Dados a serem inseridos:", dataToInsert); // 'dataToInsert' é o objeto que você passa para o create()
 
-                        // Para verificar o comprimento de cada string individualmente:
+                      /*  // Para verificar o comprimento de cada string individualmente:
                         console.log("Seguradora length:", dataToInsert.Seguradora ? dataToInsert.Seguradora.length : 'N/A');
                         console.log("Segurado length:", dataToInsert.Segurado ? dataToInsert.Segurado.length : 'N/A');
                         console.log("Sinistro length:", dataToInsert.Sinistro ? dataToInsert.Sinistro.length : 'N/A');
@@ -415,10 +422,12 @@ const __dirname = path.dirname(__filename);
                         console.log("TpIncidencia length:", dataToInsert.TpIncidencia ? dataToInsert.TpIncidencia.length : 'N/A');
                         console.log("Executante length:", dataToInsert.Executante ? dataToInsert.Executante.length : 'N/A');
                         console.log("Descricao length:", dataToInsert.Descricao ? dataToInsert.Descricao.length : 'N/A');
-
+                                        */
 
                     // Chamada para o repositório com os dados extraídos
-                    await TSrepo.importTS(seguradora, segurado, sinistro, processo, DtInicial, DtFinal, desc, incidencia, executante);
+                    const sinistroString=String(sinistro)
+                    const descString=String(desc)
+                    await TSrepo.importTS(seguradora, segurado, sinistroString, processo, DtInicial, DtFinal, descString, incidencia, executante);
                     successfulImports++;
                 } catch (error) {
                     failedImports++;
