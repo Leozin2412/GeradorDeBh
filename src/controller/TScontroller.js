@@ -111,7 +111,7 @@ const __dirname = path.dirname(__filename);
             '3D': workbook.addWorksheet('3D'),
             'Massificados': workbook.addWorksheet('Massificados'),
             'Atividade Interna':workbook.addWorksheet('Atividade Interna'),
-            'Analise de documentos':workbook.addWorksheet('Analise de documentos'),
+            'Análise de documentos':workbook.addWorksheet('Análise de documentos'),
             'Reunião':workbook.addWorksheet('Reunião'),
             'Relatório':workbook.addWorksheet('Relatório'),
             'Viagem':workbook.addWorksheet('Viagem'),
@@ -301,12 +301,12 @@ const __dirname = path.dirname(__filename);
                 bottom: { style: 'thin' },
                 right: { style: 'thin' }
             }
-            
-
-            const filename = `${firstItem.Sinistro || 'geral'}-${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
+                       
+            const filename = `${firstItem.Sinistro || 'geral'}- -${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
-            
+            const sanitizedFilename = filename.replace(/"/g, ''); // Remove aspas internas se houver
+            res.setHeader('Content-Disposition', `attachment; filename=${sanitizedFilename}`);
+           
             await workbook.xlsx.write(res);
             res.end();
             /*
@@ -396,7 +396,13 @@ const __dirname = path.dirname(__filename);
                 const executante = row.getCell(headerMap['Regulador/Prestador']).value;
                 
                 try {
-                    if (!processo || !DtInicial || !DtFinal || !desc || !incidencia || !executante) {
+                    if (!processo || !DtInicial || !DtFinal || !incidencia || !executante) {
+                        console.log(processo)
+                        console.log(DtInicial)
+                        console.log(DtFinal)
+                        //console.log(desc)
+                        console.log(incidencia)
+                        console.log(executante)
                         throw new Error(`Dados obrigatórios (Processo, Datas, Descrição, Incidência, Executante) estão faltando.`);
                     }
                       /*     const dataToInsert = {
@@ -426,8 +432,8 @@ const __dirname = path.dirname(__filename);
 
                     // Chamada para o repositório com os dados extraídos
                     const sinistroString=String(sinistro)
-                    const descString=String(desc)
-                    await TSrepo.importTS(seguradora, segurado, sinistroString, processo, DtInicial, DtFinal, descString, incidencia, executante);
+                    //const descString=String(desc)
+                    await TSrepo.importTS(seguradora, segurado, sinistroString, processo, DtInicial, DtFinal, desc, incidencia, executante);
                     successfulImports++;
                 } catch (error) {
                     failedImports++;

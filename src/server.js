@@ -7,6 +7,9 @@ import cors from 'cors'
 const app = express()
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }))
+app.use(cors({
+    exposedHeaders: ['Content-Disposition'] // <--- Adicione esta linha!
+}));
 app.use((req, res, next) => {
     // Substitua pela sua origem frontend em produção:
     res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
