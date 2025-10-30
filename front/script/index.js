@@ -57,7 +57,9 @@ document.getElementById('timesheetForm').addEventListener('submit', async functi
         const blob = await response.blob(); // Pega a resposta como um objeto binário (o arquivo)
 
         // Tenta extrair o nome do arquivo do header 'Content-Disposition' enviado pelo backend
-        const contentDisposition = response.headers.get('content-disposition');
+
+        
+        const contentDisposition = response.headers.get('Content-Disposition');
         let filename = 'boletim-horas.xlsx'; // Nome padrão caso o header não seja encontrado
         if (contentDisposition) {
             const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);

@@ -1,8 +1,12 @@
-import { stringify } from "querystring";
-import prisma from "../util/prismaclient.js";
+
+
+
+import { PrismaClient } from '../../generated/prisma/index.js';
+const prisma=new PrismaClient()
 const TSrepo={
-    async importTS(seguradora,segurado,sinistro,processo,DtInicial,DtFinal,desc,incidencia,executante){
-                const sinistroString=stringify(sinistro)
+    async importTS(seguradora,segurado,sinistroString,processo,DtInicial,DtFinal,descString,incidencia,executante){
+               // const sinistroString=stringify(sinistro)
+               
                 const importTS=await prisma.timesheet.create({
                     data:{
                     Seguradora: seguradora,
@@ -11,7 +15,7 @@ const TSrepo={
                     NTradsul: processo,
                     DtInicial: DtInicial,
                     DtFinal: DtFinal,
-                    Descricao: desc,
+                    Descricao: descString,
                     TpIncidencia: incidencia,
                     Executante: executante,
                     }
@@ -39,7 +43,7 @@ const TSrepo={
                 Executante:true
             },
             orderBy:{
-                    DtInicial:'desc'
+                    DtInicial:'asc'
             }
 
             }
