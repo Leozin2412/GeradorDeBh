@@ -85,6 +85,8 @@ const __dirname = path.dirname(__filename);
             }
             console.log('DADOS DO BANCO (TSfiltrado):', JSON.stringify(TSfiltrado, null, 2));
             const firstItem = TSfiltrado[0];
+            const TsFiltradoLength=TSfiltrado.length
+            const finalItem=TSfiltrado[TsFiltradoLength-1]
             const workbook=new excel.Workbook();
             workbook.creator='Leonardo Monteiro';
             workbook.created=new Date()
@@ -220,10 +222,13 @@ const __dirname = path.dirname(__filename);
 
                     const valorHoraRow = worksheet.addRow([]);
                     valorHoraRow.getCell('B').value = "Valor Hora Tradsul";
+                    valorHoraRow.getCell('E').numFmt = '"R$ "#,##0.00';
 
                     const totalFinalRow = worksheet.addRow([]);
                     totalFinalRow.getCell('B').value = "Total Cálculo Final";
                     totalFinalRow.getCell('B').font = { bold: true };
+                    totalFinalRow.getCell('E').numFmt = '"R$ "#,##0.00';
+                    
                         
                     // --- BORDAS DA TABELA E TOTAIS ---
                     const tableEndRow = totalFinalRow.number;
@@ -301,8 +306,24 @@ const __dirname = path.dirname(__filename);
                 bottom: { style: 'thin' },
                 right: { style: 'thin' }
             }
-                       
-            const filename = `${firstItem.Sinistro || 'geral'}- -${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
+                const MesInicial=firstItem.DtInicial.getMonth()
+                const MesFinal=finalItem.DtInicial.getMonth()      
+                const Mes={
+                    0:"Jan",
+                    1:"Fev",
+                    2:"Mar",
+                    3:"Abr",
+                    4:"Mai",
+                    5:"Jun",
+                    6:"Jul",
+                    7:"Ago",
+                    8:"Set",
+                    9:"Out",
+                    10:"Nov",
+                    11:"Dez"
+                }
+                console.log(MesFinal,MesInicial)
+            const filename = `${firstItem.Sinistro || 'geral'}-Parcial de ${Mes[MesInicial]} a ${Mes[MesFinal]} de 2025 -${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             const sanitizedFilename = filename.replace(/"/g, ''); // Remove aspas internas se houver
             res.setHeader('Content-Disposition', `attachment; filename=${sanitizedFilename}`);

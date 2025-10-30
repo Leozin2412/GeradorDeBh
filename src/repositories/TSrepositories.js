@@ -43,7 +43,7 @@ const TSrepo={
                 Executante:true
             },
             orderBy:{
-                    DtInicial:'desc'
+                    DtInicial:'asc'
             }
 
             }
