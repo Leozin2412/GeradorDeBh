@@ -9,8 +9,6 @@
   },
   "scripts": {
    "build": "echo 'Build simples para Vercel.'",
-    "vercel-build": "npm run build-prisma", 
-    "build-prisma": "prisma generate",
     "start": "node ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --env-file .env ./src/serverTest.js"
