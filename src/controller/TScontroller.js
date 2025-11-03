@@ -131,7 +131,7 @@ const __dirname = path.dirname(__filename);
             }, {});
             console.log('CHAVES AGRUPADAS (groupedData):', Object.keys(groupedData));
             //Função para incluir a logo    
-                const logoPath = path.join(__dirname, '..','..', 'front','img','logo.png'); 
+                const logoPath = path.join(__dirname, '..','..','img','logo.png'); 
             if (!fs.existsSync(logoPath)) {
                 throw new Error(`Logo não encontrado em: ${logoPath}`);
             }
