@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // uncomment next line if you use Prisma <5.10
+  // directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+// Em prisma/schema.prisma
+
+// Em prisma/schema.prisma
+
+model timesheet {
+  id           Int      @id @default(autoincrement())
+  Seguradora   String?  @db.VarChar(255)
+  Segurado     String   @db.VarChar(255)
+  Sinistro     String?  @db.VarChar(255)
+  NTradsul     String   @db.VarChar(100)
+  DtInicial    DateTime
+  DtFinal      DateTime
+  Descricao    String?  @db.Text
+  TpIncidencia String   @db.VarChar(255)
+  Executante   String   @db.VarChar(255)
+}
