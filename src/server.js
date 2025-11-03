@@ -12,7 +12,8 @@ app.use(cors({
 }));
 app.use((req, res, next) => {
     // Substitua pela sua origem frontend em produção:
-    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+    const allowedOrigin=process.env.FRONTEND_URL ||"http://127.0.0.1:5500/index.html"
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     // Ou para qualquer origem durante o desenvolvimento (menos seguro):
     // res.setHeader('Access-Control-Allow-Origin', '*'); 
 
@@ -24,10 +25,10 @@ app.use((req, res, next) => {
 
 app.use(express.json());//Ativa body pars
 app.use(routes)
-
+/*
 app.listen(config.port,()=>{
     console.log(`Servidor rodando em ${config.host}`)
-})
+})*/
 
 
 
