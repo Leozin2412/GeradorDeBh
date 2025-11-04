@@ -8,7 +8,7 @@
     "node": "22.x"
   },
   "scripts": {
-   "build": "echo 'Build simples para Vercel.'",
+   
     "start": "node ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --env-file .env ./src/serverTest.js"
