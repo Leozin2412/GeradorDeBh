@@ -22,7 +22,7 @@ app.use(cors({
     next();
 }); */
 // --- NOVA CONFIGURAÇÃO CORS ---
-const allowedFrontendUrl = process.env.FRONTEND_URL || "https://geradordebh.netlify.app"; // Remova a barra final aqui!
+const allowedFrontendUrl = process.env.FRONTEND_URL || "https://geradordebh.netlify.app/"; // Remova a barra final aqui!
 const localDevelopmentOrigins = [
     "http://127.0.0.1:5500", // Live Server
     "http://localhost:3000",  // Exemplo de outras origens de desenvolvimento
