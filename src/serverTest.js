@@ -29,7 +29,9 @@ app.use(routes)
 app.listen(config.port,()=>{
     console.log(`Servidor rodando em ${config.host}`)
 })
-
+app.listen(config.port,()=>{
+    console.log(`Servidor rodando em ${config.host}`)
+})
 
 
 

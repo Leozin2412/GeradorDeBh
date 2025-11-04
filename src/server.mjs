@@ -25,4 +25,8 @@ app.use((req, res, next) => {
 
 app.use(express.json());//Ativa body pars
 app.use(routes)
- export default app
+
+const PORT = process.env.PORT || 3000; // O Render injeta a variável PORT
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
