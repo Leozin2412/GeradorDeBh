@@ -307,7 +307,7 @@ const __dirname = path.dirname(__filename);
                 right: { style: 'thin' }
             }
                 const MesInicial=firstItem.DtInicial.getMonth()
-                const MesFinal=finalItem.DtInicial.getMonth()      
+                const MesFinal=finalItem.DtFinal.getMonth()      
                 const Mes={
                     0:"Jan",
                     1:"Fev",
@@ -325,7 +325,7 @@ const __dirname = path.dirname(__filename);
                 console.log(MesFinal,MesInicial)
             const filename = `${!firstItem.Sinistro?'geral':firstItem.Sinistro}-Parcial de ${Mes[MesInicial]} a ${Mes[MesFinal]} de 2025 -${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
             
-            const sanitizedFilename = filename.replace(/[-/\:*?"<>|\n]/g, '_'); // Remove aspas internas se houver
+            const sanitizedFilename = filename.replace(/[/\:*?"<>|\n–—]/g, '_'); // Remove aspas internas se houver
             
             const encodedFilenameForHeader = encodeURIComponent(sanitizedFilename);
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
