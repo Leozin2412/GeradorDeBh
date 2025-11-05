@@ -325,7 +325,7 @@ const __dirname = path.dirname(__filename);
                 console.log(MesFinal,MesInicial)
             const filename = `${!firstItem.Sinistro?'geral':firstItem.Sinistro}-Parcial de ${Mes[MesInicial]} a ${Mes[MesFinal]} de 2025 -${firstItem.Segurado || 'geral'}-${firstItem.NTradsul || 'geral'}.xlsx`;
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            const sanitizedFilename = filename.replace(/"/g, ''); // Remove aspas internas se houver
+            const sanitizedFilename = filename.replace(/[/\:*?"<>|\n]/g, '_'); // Remove aspas internas se houver
             res.setHeader('Content-Disposition', `attachment; filename=${sanitizedFilename}`);
            
             await workbook.xlsx.write(res);
