@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
 } */
 const prisma=new PrismaClient();
 const TSrepo={
-    async importTS(seguradora,segurado,sinistroString,processo,DtInicial,DtFinal,descString,incidencia,executante){
+    async importTS(seguradora,segurado,sinistroString,processoUp,DtInicial,DtFinal,descString,incidencia,executante){
                // const sinistroString=stringify(sinistro)
                
                 const importTS=await prisma.timesheet.create({
@@ -20,7 +20,7 @@ const TSrepo={
                     Seguradora: seguradora,
                     Segurado: segurado,
                     Sinistro: sinistroString,
-                    NTradsul: processo,
+                    NTradsul: processoUp,
                     DtInicial: DtInicial,
                     DtFinal: DtFinal,
                     Descricao: descString,
