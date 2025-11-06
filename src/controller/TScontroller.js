@@ -331,7 +331,7 @@ const __dirname = path.dirname(__filename);
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader(
             'Content-Disposition',
-            `attachment; filename="${sanitizedFilename}"; filename*=UTF-8''${encodedFilenameForHeader}`
+            `attachment; filename="${sanitizedFilename}"`
             );
 
             await workbook.xlsx.write(res);
