@@ -331,7 +331,7 @@ const __dirname = path.dirname(__filename);
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader(
             'Content-Disposition',
-            `attachment; filename="${sanitizedFilename};"`
+            `attachment; filename="${sanitizedFilename}"; filename*=UTF-8''${encodedFilenameForHeader}`
             );
 
             await workbook.xlsx.write(res);
@@ -461,7 +461,7 @@ const __dirname = path.dirname(__filename);
                     const sinistroString=String(sinistro)
                     const processoUp = processoString.toUpperCase();
                     //const descString=String(desc)
-
+                    
                     await TSrepo.importTS(seguradora, segurado, sinistroString, processoUp, DtInicial, DtFinal, desc, incidencia, executante);
                     successfulImports++;
                 } catch (error) {
